@@ -7,6 +7,8 @@ An end-to-end NLP pipeline that turns raw news articles into structured, decisio
 > Author: Trilok Kalani | Group: Individual (solo) | Dataset: BBC News (~2,000 articles, capped from 2,225, across 5 categories)
 >
 > Repository: https://github.com/Tikskalani/ITAI2373-Portfolio | Project folder: `ITAI2373-NewsBot-Midterm`
+>
+> Video demonstration: https://drive.google.com/file/d/1MXvCwSGUxYjsma8vwFQQ8gi9zK3ylmji/view?usp=sharing
 
 ---
 
@@ -62,7 +64,7 @@ jupyter notebook NewsBot_Intelligence_System.ipynb
 - **Interactive dashboard:** a Gradio UI to paste an article and get the full analysis (runs live in Colab):
 
 ![NewsBot Gradio dashboard](visualizations/gradio_dashboard.png)
-- **Video demo (optional, +10):** the notebook's integration section runs five real June 2026 news articles (one per category), all classified correctly, ready to screen-record.
+- **Video demo (5 to 7 min):** a walkthrough of the system with a live demo on five real June 2026 news articles. Watch it here: https://drive.google.com/file/d/1MXvCwSGUxYjsma8vwFQQ8gi9zK3ylmji/view?usp=sharing
 
 ## Repository structure
 ```
