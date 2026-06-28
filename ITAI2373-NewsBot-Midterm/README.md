@@ -59,7 +59,9 @@ jupyter notebook NewsBot_Intelligence_System.ipynb
 - **Topic modeling (LDA) + 2D map:** unsupervised topics rediscover the five categories with no labels.
 - **Custom domain NER:** a spaCy EntityRuler corrects domain entities (for example tagging *Nvidia* and *Manchester United* as organizations).
 - **Research extension:** a cross-validated experiment on whether grammatical style alone predicts the category.
-- **Interactive dashboard:** a Gradio UI to paste an article and get the full analysis.
+- **Interactive dashboard:** a Gradio UI to paste an article and get the full analysis (runs live in Colab):
+
+![NewsBot Gradio dashboard](visualizations/gradio_dashboard.png)
 - **Video demo (optional, +10):** the notebook's integration section runs five real June 2026 news articles (one per category), all classified correctly, ready to screen-record.
 
 ## Repository structure
