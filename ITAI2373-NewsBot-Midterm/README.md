@@ -73,7 +73,6 @@ ITAI2373-NewsBot-Midterm/
 ├── requirements.txt
 ├── MT_Report_Group_SOLO_Trilok_Kalani_ITAI2373.pdf   # one-page written report
 ├── NewsBot_Reflection_TrilokKalani.pdf               # 2-page reflective journal
-├── VIDEO_SCRIPT.md                                    # narration for the demo video
 └── visualizations/                     # saved result figures
 ```
 
