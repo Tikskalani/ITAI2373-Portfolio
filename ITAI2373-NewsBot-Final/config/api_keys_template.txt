@@ -1,0 +1,9 @@
+# Copy this file to config/api_keys.txt and fill in real values.
+# config/api_keys.txt is git-ignored and must NEVER be committed.
+
+# Optional: only needed if you use a paid translation provider in Module C.
+# The default translator (deep-translator / Google web endpoint) needs no key.
+TRANSLATE_API_KEY=your_key_here
+
+# Optional: HuggingFace token for gated models (not required for the defaults).
+HUGGINGFACE_TOKEN=your_token_here

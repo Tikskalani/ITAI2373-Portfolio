@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NewsBot Intelligence System 2.0</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>NewsBot Intelligence System 2.0</h1>
+    <p>Advanced NLP platform &middot; {{ n_articles }} training articles &middot; {{ categories|join(', ') }}</p>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Analyze an article</h2>
+      <textarea id="article" placeholder="Paste a news article here..."></textarea>
+      <button onclick="analyze()">Analyze</button>
+      <div id="analyzeOut" class="output">Results will appear here.</div>
+    </section>
+
+    <section class="card">
+      <h2>Ask NewsBot</h2>
+      <p class="hint">Try: "what is the sentiment", "who is mentioned", "give me a summary", "find news about elections". Uses the article above when relevant.</p>
+      <input id="query" placeholder="Ask a question...">
+      <button onclick="ask()">Ask</button>
+      <div id="queryOut" class="output">Response will appear here.</div>
+    </section>
+
+    <section class="card">
+      <h2>Find similar articles</h2>
+      <input id="simq" placeholder="e.g. football championship final">
+      <button onclick="similar()">Search</button>
+      <div id="simOut" class="output">Matches will appear here.</div>
+    </section>
+  </main>
+  <footer>NewsBot 2.0 &middot; ITAI 2373 Final Project &middot; Trilok Kalani</footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

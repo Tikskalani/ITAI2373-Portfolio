@@ -1,0 +1,31 @@
+# NewsBot 2.0 dependencies
+# After install:  python -m spacy download en_core_web_sm
+
+# ---- Core (required) -------------------------------------------------------
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.3
+spacy>=3.7
+nltk>=3.8
+textblob>=0.17
+wordcloud>=1.9
+matplotlib>=3.7
+seaborn>=0.12
+
+# Module C (multilingual) - lightweight
+langdetect>=1.0.9
+deep-translator>=1.11
+
+# Web application + testing
+flask>=3.0
+gunicorn>=21.0
+pytest>=7.0
+
+# ---- Optional upgrades (Module B dense models) -----------------------------
+# The system works fully without these (extractive summaries, TF-IDF search).
+# Uncomment for abstractive summarization / transformer embeddings:
+# transformers>=4.40
+# torch>=2.0
+# sentence-transformers>=2.6
+# gradio>=4.0

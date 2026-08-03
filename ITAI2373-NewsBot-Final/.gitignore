@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+config/api_keys.txt
+
+# never commit large media or heavy model binaries
+*.mp4
+*.mov
+*.mkv
+data/models/*
+!data/models/.gitkeep

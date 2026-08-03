@@ -1,0 +1,2 @@
+"""NewsBot 2.0 source package."""
+__version__ = "2.0.0"

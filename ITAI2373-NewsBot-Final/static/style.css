@@ -1,0 +1,16 @@
+:root{--bg:#0b0f17;--panel:#161b26;--edge:#2b3343;--txt:#e6edf3;--sub:#9aa4b2;--accent:#f97316;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:26px;text-align:center;border-bottom:1px solid var(--edge)}
+header h1{margin:0 0 6px;font-size:26px}
+header p{color:var(--sub);margin:0}
+main{max-width:900px;margin:0 auto;padding:22px;display:grid;gap:18px}
+.card{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:18px}
+.card h2{margin:0 0 10px;font-size:18px}
+.hint{color:var(--sub);font-size:13px;margin:0 0 10px}
+textarea,input{width:100%;background:#0e131c;border:1px solid var(--edge);color:var(--txt);border-radius:8px;padding:10px;font-size:14px}
+textarea{min-height:120px;resize:vertical}
+button{margin-top:10px;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:600;cursor:pointer}
+button:hover{filter:brightness(1.08)}
+.output{margin-top:14px;background:#0e131c;border:1px solid var(--edge);border-radius:8px;padding:12px;min-height:24px;line-height:1.6;font-size:14px;color:var(--sub)}
+footer{text-align:center;color:var(--sub);padding:18px;border-top:1px solid var(--edge);margin-top:22px}
