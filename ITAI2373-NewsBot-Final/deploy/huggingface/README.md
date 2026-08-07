@@ -2,7 +2,7 @@
 title: NewsBot Intelligence System 2.0
 emoji: 📰
 colorFrom: indigo
-colorTo: orange
+colorTo: purple
 sdk: gradio
 sdk_version: 4.44.0
 app_file: app.py
