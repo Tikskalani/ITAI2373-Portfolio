@@ -79,6 +79,19 @@ python app.py      # then open http://localhost:5000
 pytest tests/ -q      # 8 passing
 ```
 
+
+## Final deliverables
+
+| Deliverable | File |
+|---|---|
+| Technical documentation | reports/FP_TechnicalDoc_TrilokKalani_SOLO_ITAI2373.pdf |
+| Executive summary | reports/FP_ExecutiveSummary_TrilokKalani_SOLO_ITAI2373.pdf |
+| Reflective journal (3 pages) | reports/FP_ReflectiveJournal_SOLO_ITAI2373.pdf |
+| Presentation deck | reports/FP_Presentation_TrilokKalani_SOLO_ITAI2373.pptx |
+| Video presentation | recorded from VIDEO_SCRIPT.md (link added after recording) |
+
+Notebooks 01-07 in `notebooks/` run end-to-end (they auto-locate the repo, or clone it on a fresh Colab) and are saved with their outputs.
+
 ## What carries over from the midterm
 
 The midterm delivered a working preprocessing to TF-IDF to classification pipeline (97.5% test accuracy), sentiment/emotion, NER with a domain EntityRuler, LDA topic modeling, and a Gradio dashboard. Those are refactored here into clean `src/` classes and are the foundation the four advanced modules and the web app extend.
