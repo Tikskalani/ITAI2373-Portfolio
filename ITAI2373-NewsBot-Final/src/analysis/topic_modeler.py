@@ -16,10 +16,12 @@ class TopicModeler:
         self.method = method.lower()
         self.random_state = random_state
         if self.method == "nmf":
-            self.vectorizer = TfidfVectorizer(max_features=max_features, min_df=5, max_df=0.9)
+            self.vectorizer = TfidfVectorizer(max_features=max_features, min_df=5, max_df=0.9,
+                                              stop_words="english", token_pattern=r"(?u)\b[a-zA-Z][a-zA-Z]+\b")
             self.model = NMF(n_components=n_topics, random_state=random_state, init="nndsvda", max_iter=400)
         else:
-            self.vectorizer = CountVectorizer(max_features=max_features, min_df=5, max_df=0.9)
+            self.vectorizer = CountVectorizer(max_features=max_features, min_df=5, max_df=0.9,
+                                              stop_words="english", token_pattern=r"(?u)\b[a-zA-Z][a-zA-Z]+\b")
             self.model = LatentDirichletAllocation(n_components=n_topics, random_state=random_state,
                                                    learning_method="batch", max_iter=15)
         self.vocab_ = None

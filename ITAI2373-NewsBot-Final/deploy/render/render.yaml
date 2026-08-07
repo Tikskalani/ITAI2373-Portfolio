@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: newsbot2
+    runtime: python
+    rootDir: ITAI2373-NewsBot-Final
+    buildCommand: "pip install -r requirements.txt && python -m spacy download en_core_web_sm"
+    startCommand: "gunicorn app:app"
+    plan: free
