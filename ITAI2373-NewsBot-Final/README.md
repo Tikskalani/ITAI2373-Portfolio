@@ -4,7 +4,9 @@
 
 A production-style, modular news-analysis platform that extends the midterm NewsBot into a full NLP system: advanced content analysis, language understanding and generation, multilingual intelligence, a conversational interface, and a Flask web frontend.
 
-> Author: Trilok Kalani | Group: Solo | Builds on: [ITAI2373-NewsBot-Midterm](../ITAI2373-NewsBot-Midterm)
+> Author: Trilok Kalani
+> Live demo (interactive, no install): https://tikskalani.github.io/ITAI2373-Portfolio/
+ | Group: Solo | Builds on: [ITAI2373-NewsBot-Midterm](../ITAI2373-NewsBot-Midterm)
 
 ---
 

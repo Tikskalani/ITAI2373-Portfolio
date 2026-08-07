@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NewsBot Intelligence System 2.0</title>
+<style>
+:root{--bg:#0b0f17;--panel:#161b26;--panel2:#1d2432;--line:#28303f;--txt:#e7ecf3;--mut:#9aa7b8;--accent:#f97316;--accent2:#60a5fa;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.logo{width:44px;height:44px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:24px}
+h1{font-size:26px;margin:0}
+.sub{color:var(--mut);font-size:14px;margin:2px 0 0}
+.banner{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--mut);font-size:13px;margin:16px 0 22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h2{font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.card p.hint{color:var(--mut);font-size:12.5px;margin:0 0 12px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+button{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.on{border-color:var(--accent);color:var(--accent)}
+textarea,input{width:100%;background:#0f1420;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13px;font-family:inherit}
+textarea{height:80px;resize:vertical}
+.row{display:flex;gap:8px}
+.row input{flex:1}
+.out{margin-top:12px;font-size:13px}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:#20304a;color:var(--accent2)}
+.bar{height:7px;background:#0f1420;border-radius:20px;overflow:hidden;flex:1}
+.bar>span{display:block;height:100%;background:var(--accent)}
+.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;background:#0f1420;color:var(--mut);margin:2px 4px 2px 0}
+.k{color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{text-align:left;padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:600;border-top:none}
+.full{grid-column:1 / -1}
+footer{color:var(--mut);font-size:12px;margin-top:22px;text-align:center}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">📰</div>
+    <div>
+      <h1>NewsBot Intelligence System 2.0</h1>
+      <div class="sub">Advanced NLP news analysis · ITAI 2373 Final Project · Trilok Kalani</div>
+    </div>
+  </header>
+  <div class="banner">Interactive demo with the model's real output on sample articles (trained on <b id="na"></b> BBC News articles). The full app analyzes any text you type when run locally with <code>python app.py</code> — see the <a href="https://github.com/Tikskalani/ITAI2373-Portfolio/tree/main/ITAI2373-NewsBot-Final" target="_blank">GitHub repo</a>.</div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>🔎 Analyze an article</h2>
+      <p class="hint">Pick a sample article:</p>
+      <div class="btns" id="sampleBtns"></div>
+      <textarea id="artText" readonly></textarea>
+      <div class="out" id="analyzeOut"></div>
+    </div>
+
+    <div class="card">
+      <h2>💬 Ask NewsBot</h2>
+      <p class="hint">Ask about the selected article. Try: sentiment · who is mentioned · summary · what topic</p>
+      <div class="row"><input id="askIn" placeholder="what is the sentiment?"/><button onclick="ask()">Ask</button></div>
+      <div class="out" id="askOut"></div>
+
+      <h2 style="margin-top:18px">🧭 Find similar articles</h2>
+      <p class="hint">Search the corpus by meaning:</p>
+      <div class="btns" id="searchBtns"></div>
+      <div class="out" id="searchOut"></div>
+    </div>
+
+    <div class="card full">
+      <h2>🗂️ Discovered topics (LDA, no labels)</h2>
+      <p class="hint">Unsupervised topics learned from the corpus. They line up with the five news beats.</p>
+      <table id="topicsTable"></table>
+    </div>
+  </div>
+
+  <footer>NewsBot 2.0 · ITAI 2373 · Trilok Kalani · <a href="https://github.com/Tikskalani/ITAI2373-Portfolio" target="_blank">github.com/Tikskalani/ITAI2373-Portfolio</a></footer>
+</div>
+
+<script>
+const DATA = {"n_articles": 2225, "articles": {"Technology": {"text": "A major technology company has launched a powerful new artificial intelligence system, but said it would limit access to a small group of trusted partners at first. The software has intensified competition between internet and computing firms racing to put advanced AI tools in front of users.", "category": "tech", "confidence": 0.91, "note": "", "key_terms": ["trusted", "computing", "system said", "advanced", "racing", "intelligence"], "sentiment": "positive", "compound": 0.871, "emotion": "neutral", "entities": [["AI", "GPE"]], "summary": "A major technology company has launched a powerful new artificial intelligence system, but said it would limit access to a small group of trusted partners at first. The software has intensified competition between internet and computing firms racing to put advanced AI tools in front of users."}, "Business": {"text": "The Nasdaq fell for a fourth straight session on Thursday as Apple shares dropped more than 4% and investors pulled money out of technology stocks over worries about rising costs. Micron surged 15% after strong earnings, while the Dow touched a record high.", "category": "business", "confidence": 0.839, "note": "", "key_terms": ["nasdaq", "pulled", "session", "apple", "earnings", "worry"], "sentiment": "positive", "compound": 0.557, "emotion": "neutral", "entities": [["Nasdaq", "ORG"], ["Thursday", "DATE"], ["Apple", "ORG"], ["more than 4%", "PERCENT"], ["Micron", "ORG"], ["15%", "PERCENT"], ["Dow", "ORG"]], "summary": "The Nasdaq fell for a fourth straight session on Thursday as Apple shares dropped more than 4% and investors pulled money out of technology stocks over worries about rising costs. Micron surged 15% after strong earnings, while the Dow touched a record high."}, "Sport": {"text": "The United States beat Australia 2-0 in their World Cup group stage match, following an earlier 4-1 win over Paraguay. The Carolina Hurricanes reached the Stanley Cup Final seeking their first title since 2006, while the Knicks battled the Spurs in the NBA Finals.", "category": "sport", "confidence": 0.955, "note": "", "key_terms": ["cup", "spur", "stanley", "battled", "cup final", "final"], "sentiment": "positive", "compound": 0.7, "emotion": "joy", "entities": [["The United States", "GPE"], ["Australia", "GPE"], ["World Cup", "EVENT"], ["Paraguay", "ORG"], ["The Carolina Hurricanes", "ORG"], ["2006", "DATE"], ["Knicks", "ORG"], ["Spurs", "PERSON"], ["NBA", "ORG"]], "summary": "The United States beat Australia 2-0 in their World Cup group stage match, following an earlier 4-1 win over Paraguay. The Carolina Hurricanes reached the Stanley Cup Final seeking their first title since 2006, while the Knicks battled the Spurs in the NBA Finals."}, "Politics": {"text": "The United Kingdom faces political uncertainty after the prime minister resigned, setting off a contest to lead the governing party. Opposition leaders demanded a general election, while ministers urged calm and promised a smooth handover of government.", "category": "politics", "confidence": 0.966, "note": "", "key_terms": ["demanded", "uncertainty", "governing", "resigned", "minister", "contest"], "sentiment": "positive", "compound": 0.612, "emotion": "neutral", "entities": [["United Kingdom", "GPE"]], "summary": "The United Kingdom faces political uncertainty after the prime minister resigned, setting off a contest to lead the governing party. Opposition leaders demanded a general election, while ministers urged calm and promised a smooth handover of government."}}, "topics": {"0": ["said", "year", "company", "market", "mr", "firm", "new"], "1": ["film", "best", "said", "year", "music", "awards", "new"], "2": ["said", "mr", "government", "labour", "people", "election", "party"], "3": ["said", "people", "technology", "mobile", "new", "mr", "use"], "4": ["said", "game", "time", "england", "year", "world", "win"]}, "search": {"football championship final": [{"category": "sport", "score": 0.217, "snippet": "Legendary Dutch boss Michels dies Legendary Dutch coach Rinus Michels, the man credited with developing \"total football\", has died aged 77. Referred t"}, {"category": "tech", "score": 0.181, "snippet": "Football Manager scores big time For the past decade or so the virtual football fans among us will have become used to the annual helping of Champions"}, {"category": "sport", "score": 0.124, "snippet": "England claim Dubai Sevens glory England beat Fiji 26-21 in a dramatic final in Dubai to win the first IRB Sevens event of the season. Having beaten A"}], "election government policy": [{"category": "politics", "score": 0.271, "snippet": "Lib Dems' 'bold' election policy Charles Kennedy has told voters his Liberal Democrats will offer them an \"honest choice\" at the next general election"}, {"category": "politics", "score": 0.266, "snippet": "February poll claim 'speculation' Reports that Tony Blair is planning a snap general election for February 2005 have been described as \"idle speculati"}, {"category": "politics", "score": 0.26, "snippet": "Blair prepares to name poll date Tony Blair is likely to name 5 May as election day when Parliament returns from its Easter break, the BBC's political"}], "stock market shares profit": [{"category": "business", "score": 0.388, "snippet": "Google shares fall as staff sell Shares in Google have fallen 6.7% after employees and early investors in the web search took advantage of the first c"}, {"category": "business", "score": 0.262, "snippet": "Standard Life cuts policy bonuses Standard Life, Europe's largest mutual life insurer, has cut bonuses for with-profit policyholders. Annual bonus rat"}, {"category": "business", "score": 0.238, "snippet": "Nasdaq planning $100m share sale The owner of the technology-dominated Nasdaq stock index plans to sell shares to the public and list itself on the ma"}]}};
+let current = "Technology";
+document.getElementById("na").textContent = DATA.n_articles.toLocaleString();
+
+function esc(s){return (s||"").replace(/</g,"&lt;");}
+function analyze(name){
+  const a = DATA.articles[name];
+  document.getElementById("artText").value = a.text;
+  const conf = Math.round(a.confidence*100);
+  const sc = a.sentiment==="positive"?"#34d399":a.sentiment==="negative"?"#f87171":"#9aa7b8";
+  const ents = a.entities.map(e=>`<span class="pill">${esc(e[0])} <span class="k">${e[1]}</span></span>`).join(" ")||'<span class="k">none found</span>';
+  const terms = a.key_terms.map(t=>`<span class="pill">${esc(t)}</span>`).join(" ")||'<span class="k">n/a</span>';
+  document.getElementById("analyzeOut").innerHTML =
+    `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+       <span class="tag">${a.category}</span><span class="k">confidence</span>
+       <div class="bar"><span style="width:${conf}%"></span></div><b>${conf}%</b></div>`+
+    (a.note?`<div class="k" style="margin-bottom:6px">${esc(a.note)}</div>`:``)+
+    `<div style="margin-bottom:8px">Sentiment: <b style="color:${sc}">${a.sentiment}</b> <span class="k">(${a.compound.toFixed(2)})</span> &nbsp; Emotion: <b>${a.emotion}</b></div>
+     <div class="k" style="margin-bottom:3px">Entities</div><div style="margin-bottom:8px">${ents}</div>
+     <div class="k" style="margin-bottom:3px">Key terms</div><div style="margin-bottom:8px">${terms}</div>
+     <div class="k" style="margin-bottom:3px">Summary</div><div>${esc(a.summary)}</div>`;
+}
+const sb=document.getElementById("sampleBtns");
+Object.keys(DATA.articles).forEach((n,i)=>{
+  const b=document.createElement("button"); b.textContent=n;
+  b.onclick=()=>{current=n; analyze(n); [...sb.children].forEach(x=>x.classList.remove("on")); b.classList.add("on");};
+  sb.appendChild(b); if(i===0) b.classList.add("on");
+});
+
+function ask(){
+  const a=DATA.articles[current]; let q=(document.getElementById("askIn").value||"").toLowerCase(), r;
+  if(/sentiment|feel|tone|positive|negative/.test(q)) r=`The ${current} article reads <b>${a.sentiment}</b> (compound ${a.compound.toFixed(2)}), dominant emotion <b>${a.emotion}</b>.`;
+  else if(/who|entit|people|organi|mention|company/.test(q)) r="Entities: "+(a.entities.map(e=>esc(e[0])+" ("+e[1]+")").join(", ")||"none found")+".";
+  else if(/summar|tl;?dr|short|brief/.test(q)) r=esc(a.summary);
+  else if(/topic|about|categor|classif|kind/.test(q)) r=`Classified as <b>${a.category}</b> at ${Math.round(a.confidence*100)}% confidence. Key terms: ${a.key_terms.slice(0,4).join(", ")}.`;
+  else r='Try asking about the <b>sentiment</b>, <b>who is mentioned</b>, a <b>summary</b>, or the <b>topic</b>. (The local app routes any question through the full intent classifier.)';
+  document.getElementById("askOut").innerHTML=`<div class="k">on ${current} article →</div>${r}`;
+}
+document.getElementById("askIn").addEventListener("keydown",e=>{if(e.key==="Enter")ask();});
+
+const seb=document.getElementById("searchBtns");
+Object.keys(DATA.search).forEach(q=>{
+  const b=document.createElement("button"); b.textContent=q;
+  b.onclick=()=>{
+    [...seb.children].forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    const rows=DATA.search[q].map(r=>`<tr><td><span class="tag">${r.category}</span></td><td class="k">${r.score.toFixed(3)}</td><td>${esc(r.snippet)}...</td></tr>`).join("");
+    document.getElementById("searchOut").innerHTML=`<table><tr><th>Category</th><th>Score</th><th>Snippet</th></tr>${rows}</table>`;
+  };
+  seb.appendChild(b);
+});
+
+const names={0:"",1:"",2:"",3:"",4:""};
+document.getElementById("topicsTable").innerHTML="<tr><th>Topic</th><th>Top words</th></tr>"+
+  Object.keys(DATA.topics).map(k=>`<tr><td><b>Topic ${k}</b></td><td>${DATA.topics[k].join(", ")}</td></tr>`).join("");
+analyze("Technology");
+</script>
+</body>
+</html>
