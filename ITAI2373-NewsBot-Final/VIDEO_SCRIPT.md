@@ -1,126 +1,133 @@
-# NewsBot 2.0 — Final Video Presentation Script (10 to 15 minutes)
+# NewsBot 2.0 — Final Video Presentation Script (record-ready)
 
 Presenter: Trilok Kalani | Course: ITAI 2373 | Group: SOLO
 Upload name: FP_VideoPresentation_TrilokKalani_SOLO_ITAI2373.mp4
+Target length: 10 to 15 minutes (this reads to about 12 at a normal pace).
 
-Record at 720p or higher, zoom so code and charts are readable, and have the app
-and notebooks already run so nothing is loading on camera. Speaking at about 140
-words per minute lands this near 12 minutes. The [ON SCREEN] cues tell you what to
-show. The slide deck FP_Presentation_TrilokKalani_SOLO_ITAI2373.pptx follows these
-segments one to one, so you can present straight from it.
+## Before you hit record (2 minute setup)
+Open two things and nothing else:
+1. The slide deck: reports/FP_Presentation_TrilokKalani_SOLO_ITAI2373.pptx (put it in Slide Show mode).
+2. The live demo in a browser tab: https://tikskalani.github.io/ITAI2373-Portfolio/
+Optional third tab: the GitHub repo https://github.com/Tikskalani/ITAI2373-Portfolio
 
-## Segment 1 — Intro (0:00 to 1:00)
-[ON SCREEN: Slide 1, then the GitHub repo with the ITAI2373-NewsBot-Final folder open.]
+Use any screen recorder (the deck's Slide Show > Record, or OBS, or Zoom). Share your
+screen, use a headset mic if you have one, record at 720p or higher. Just read the lines
+below in a normal voice. The [SHOW] cues tell you what to have on screen. You do not need
+to run any code, the demo is the live website.
+
+---
+
+## 1. Intro  (about 0:00 to 1:00)
+[SHOW: Slide 1, the title slide.]
 
 "Hi, I am Trilok Kalani, and this is my ITAI 2373 final project, NewsBot Intelligence
-System 2.0. I did this as an individual project. For the midterm I built an
-end-to-end news analysis pipeline in a single notebook. For the final I rebuilt that
-into a real, modular system and added four advanced capabilities on top: deeper
-content analysis, language understanding and generation, multilingual analysis, and
-a conversational interface. I also built a web app so you can use all of it in a
-browser. Everything lives in the ITAI2373-NewsBot-Final folder in my portfolio repo."
+System 2.0. I completed it as an individual project. For the midterm I built an
+end-to-end news analysis pipeline in a single notebook. For the final I rebuilt that into
+a real, modular system and added four advanced capabilities on top: deeper content
+analysis, language understanding and generation, multilingual analysis, and a
+conversational interface. I also built a web front end so you can use all of it in a
+browser, which I will demo live in a minute."
 
-## Segment 2 — From midterm to final (1:00 to 2:00)
-[ON SCREEN: Slide 3. Show the src/ folder tree.]
+## 2. From midterm to final  (about 1:00 to 2:00)
+[SHOW: Slide 3.]
 
-"The biggest change is structure. The midterm was one long notebook. The final is a
-Python package. Every capability is its own small class with one job, under src, so
-I can test it alone and reuse it from the notebooks, the tests, and the web app. That
+"The biggest change is structure. The midterm was one long notebook. The final is a Python
+package where every capability is its own small class under a source folder, so I can test
+each part on its own and reuse it from the notebooks, the tests, and the web app. That
 refactor is what made the four new modules possible, because once the parts had clean
 inputs and outputs I could wire them together instead of copying code around."
 
-## Segment 3 — Architecture (2:00 to 3:00)
-[ON SCREEN: Slide 4, the architecture diagram.]
+## 3. Architecture  (about 2:00 to 3:00)
+[SHOW: Slide 4, the architecture diagram.]
 
-"Here is the architecture. Raw article text comes into a thin facade called NewsBot,
-which handles classification, sentiment, and entities. On top of that sit the four
-modules. The design rule is parse and vectorize once, then reuse. The classifier owns
-the TF-IDF vectorizer for the five known categories, while search and topic modeling
-keep their own vectorizers because they are tuned for different goals. On the very top
-is the Flask web app, which is just a presentation layer over these same components."
+"Here is the architecture. Raw article text comes into a thin facade called NewsBot, which
+handles classification, sentiment, and entities. On top of that sit the four modules. The
+design rule is parse and vectorize once, then reuse. The classifier owns the TF-IDF
+vectorizer for the five known categories, while search and topic modeling keep their own
+vectorizers, tuned for different goals. On top of all of it is the web app, which is just a
+presentation layer over these same components."
 
-## Segment 4 — Module A, Content Analysis (3:00 to 4:30)
-[ON SCREEN: Slide 5, then run a classification in the app or notebook 02.]
+## 4. The four modules  (about 3:00 to 5:30)
+[SHOW: Slides 5, 6, 7, 8 in turn.]
 
-"Module A is advanced content analysis. Classification returns the category, a
-confidence score, the runner-up, and how many words it actually recognized. The most
-important behavior is the uncertainty guard: if the input has almost no known words,
-or the top probability is too low, it returns uncertain instead of guessing. In the
-midterm short off-topic text was getting labeled sport, and this is the fix. It also
-does sentiment with an emotion label, named entity recognition with a domain rule
-layer, and topic modeling with both LDA and NMF."
+"Module A is advanced content analysis. Classification returns the category, a confidence
+score, the runner up, and how many words it actually recognized. The key behavior is the
+uncertainty guard: if the input is empty or out of scope, it returns uncertain instead of
+guessing. It also does sentiment with an emotion label, named entity recognition, and topic
+modeling with both LDA and NMF.
 
-## Segment 5 — Module B, Language Understanding and Generation (4:30 to 6:00)
-[ON SCREEN: Slide 6, then show a summary and a semantic search result.]
+Module B is language understanding and generation. Summarization is extractive by default
+and ranks sentences by importance, with an optional transformer summarizer behind a flag.
+Semantic search ranks the whole corpus by meaning, not just keywords. There is also content
+enhancement and query expansion.
 
-"Module B is language understanding and generation. Summarization is extractive by
-default: it scores each sentence by TF-IDF salience and returns the top ones, and
-there is an optional transformer summarizer that only loads if you ask for it.
-Semantic search ranks the whole corpus by cosine similarity to a query, so I can
-search by meaning, not just keywords, and there is an optional dense embedding backend.
-There is also content enhancement and WordNet query expansion. The theme here is a
-light default that runs anywhere, with a heavier upgrade one flag away."
+Module C is multilingual. It detects the language, translates the text to English, and then
+runs the same pipeline I already trust, so a Spanish or French article gets the same
+treatment as an English one.
 
-## Segment 6 — Module C, Multilingual (6:00 to 7:00)
-[ON SCREEN: Slide 7, then run cross-lingual analyze on a Spanish or French sentence.]
+Module D is the conversational interface, and it is the piece I am most proud of. An intent
+classifier reads a plain question like what is the sentiment, and a query processor routes it
+to the right module and formats the answer. It only works because each capability is a clean
+class the router can call."
 
-"Module C is multilingual intelligence. It detects the language, translates the text
-to English, and then runs the exact same pipeline I already trust. So a Spanish or
-French article gets the same classification, sentiment, and entities as an English
-one. I chose to translate into English rather than pretend my English-trained models
-understand every language directly, which is the honest way to do it with these tools."
+## 5. Live demo  (about 5:30 to 8:30)
+[SHOW: switch to the browser tab, https://tikskalani.github.io/ITAI2373-Portfolio/ ]
 
-## Segment 7 — Module D, Conversational (7:00 to 8:15)
-[ON SCREEN: Slide 8, then type a few questions in the Ask box.]
+"Now let me show it working. This is the live web app for NewsBot 2.0, and everything you
+see here is the model's real output.
 
-"Module D is the conversational interface, and it is the piece I am most proud of
-because it ties everything together. An intent classifier reads a plain question like
-what is the sentiment, or who is mentioned, and a query processor routes it to the
-right component and formats the answer. This only works because each capability is a
-clean class, so the router can just call the right one."
+[Click the Technology sample, then Business, Sport, Politics as you talk.]
+In the Analyze panel I pick a sample article and it returns the category with a confidence
+score, the sentiment and dominant emotion, the entities it found, the key terms, and a
+short summary. Technology comes back as tech, the markets story as business, the World Cup
+story as sport at 96 percent, and the UK politics story as politics at 97 percent, all
+correct.
 
-## Segment 8 — Web app demo (8:15 to 9:45)
-[ON SCREEN: Slide 9, then the running web dashboard. Analyze an article, ask a
-question, run a search.]
+[Type a question in the Ask box, for example: what is the sentiment?]
+In the Ask panel I can ask a plain question about the selected article and it routes to the
+right answer, here the sentiment and emotion.
 
-"Here is the web app, which is the bonus frontend. The dashboard has three panels.
-I paste an article and get the category, confidence, sentiment, entities, and a
-summary. I ask a question about that article in plain English and get an answer. And
-I search for related coverage by meaning. This is the same code from the modules,
-just exposed in a browser so a non-technical user can use it."
+[Click one of the search buttons, for example election government policy.]
+In the Find similar panel I search the corpus by meaning and it returns the closest
+articles ranked by similarity, and you can see they are all on topic.
 
-## Segment 9 — Results and technical depth (9:45 to 11:00)
-[ON SCREEN: Slide 10 and 12, the demo table and the accuracy table.]
+[Scroll to the Topics section.]
+And these are the topics the model discovered with LDA, with no labels at all. They line up
+cleanly with the five news beats, which is a good sign the unsupervised side is finding real
+structure."
 
-"On results: the classification foundation reaches about 97.5 percent test accuracy
-on the five BBC categories, with Linear SVM best and all four models above 94 percent.
-On four fresh June 2026 articles the system labels tech, business, sport, and politics
-all correctly with high confidence, and it returns uncertain on short off-topic input.
-The LDA topics also rediscover the five categories with no labels at all, which is a
-nice check that the unsupervised side is finding real structure."
+## 6. Results and technical depth  (about 8:30 to 10:00)
+[SHOW: Slides 10 and 12, the demo table and the accuracy table.]
 
-## Segment 10 — Business value (11:00 to 12:00)
-[ON SCREEN: Slide 13.]
+"On results, the classification foundation reaches about 97.5 percent test accuracy on the
+five BBC categories, with Linear SVM best and all four models above 94 percent. The only
+real confusions are a few politics and business articles that share vocabulary like tax and
+economy. And as I showed, on fresh articles it classifies correctly and returns uncertain on
+short off-topic input instead of forcing a label."
+
+## 7. Business value  (about 10:00 to 11:00)
+[SHOW: Slide 13.]
 
 "In the real world this maps onto media intelligence. A communications team can point
-NewsBot at a feed, automatically flag every article that mentions them, and get warned
-when the tone turns negative. The entity extraction turns a pile of articles into a
-searchable index of the people and companies in the news, and the conversational layer
-means someone can just ask questions instead of learning a query language."
+NewsBot at a feed, automatically flag every article that mentions them, and get warned when
+the tone turns negative. The entity extraction turns a pile of articles into a searchable
+index of the people and companies in the news, and the conversational layer means someone
+can just ask questions instead of learning a query language."
 
-## Segment 11 — Limitations and future work (12:00 to 13:00)
-[ON SCREEN: Slide 14 and 15.]
+## 8. Limitations and future work  (about 11:00 to 12:00)
+[SHOW: Slides 14 and 15.]
 
-"I tried to be honest about the limits. The model is trained on older BBC news, so it
-is weaker on messy present-day text, and the lexicon sentiment misreads financial
-language and can score a profit warning as positive. I would not ship that piece
-without replacing it with a finance-tuned model like FinBERT. After that I would
-fine-tune the entity recognizer on recent news, add topic modeling over time, and
-deploy the app to a public URL. Thanks for watching."
+"I tried to be honest about the limits. The model is trained on older BBC news, so it is
+weaker on messy present-day text, and the lexicon sentiment misreads financial language and
+can score a profit warning as positive. I would replace that with a finance-tuned model like
+FinBERT. After that I would fine-tune the entity recognizer on recent news, add topic
+modeling over time, and expand the deployment. Everything is on my GitHub and there is a live
+demo link in the README. Thanks for watching."
 
-## Recording checklist
-- Tool: OBS, Zoom recording, or your built-in recorder. Headset mic if you have one.
-- Have the web app running and the notebooks already executed before you hit record.
-- Keep it between 10 and 15 minutes.
-- Upload to YouTube or Vimeo as Unlisted, or export MP4. Test the link privately.
-- Name it FP_VideoPresentation_TrilokKalani_SOLO_ITAI2373 and put the link in the README.
+---
+
+## After recording
+- Export as MP4, or upload to YouTube or Vimeo set to Unlisted.
+- Name it FP_VideoPresentation_TrilokKalani_SOLO_ITAI2373.
+- Put the link in the README next to the live demo link.
+- Submit on Canvas with the GitHub link and the three PDFs.
