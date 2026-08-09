@@ -4,9 +4,7 @@
 
 A production-style, modular news-analysis platform that extends the midterm NewsBot into a full NLP system: advanced content analysis, language understanding and generation, multilingual intelligence, a conversational interface, and a Flask web frontend.
 
-> Author: Trilok Kalani
-> Live demo (interactive, no install): https://tikskalani.github.io/ITAI2373-Portfolio/
- | Group: Solo | Builds on: [ITAI2373-NewsBot-Midterm](../ITAI2373-NewsBot-Midterm)
+> Author: Trilok Kalani | Group: Solo | Builds on: [ITAI2373-NewsBot-Midterm](../ITAI2373-NewsBot-Midterm)
 
 ---
 
@@ -89,8 +87,8 @@ pytest tests/ -q      # 8 passing
 | Technical documentation | reports/FP_TechnicalDoc_TrilokKalani_SOLO_ITAI2373.pdf |
 | Executive summary | reports/FP_ExecutiveSummary_TrilokKalani_SOLO_ITAI2373.pdf |
 | Reflective journal (3 pages) | reports/FP_ReflectiveJournal_SOLO_ITAI2373.pdf |
-| Presentation deck | reports/FP_Presentation_TrilokKalani_SOLO_ITAI2373.pptx |
-| Video presentation | recorded from VIDEO_SCRIPT.md (link added after recording) |
+| Presentation (PowerPoint) | reports/FP_Presentation_TrilokKalani_SOLO_ITAI2373.pptx (15 slides, full speaker notes) |
+| Presentation format chosen | PowerPoint (video option not used) |
 
 Notebooks 01-07 in `notebooks/` run end-to-end (they auto-locate the repo, or clone it on a fresh Colab) and are saved with their outputs.
 
